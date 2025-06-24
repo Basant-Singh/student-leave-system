@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -28,6 +27,11 @@ export default function RegisterPage() {
       setErr(err.response?.data?.msg || "Registration failed");
     }
   };
+
+  useEffect(() => {
+    document.title = "SLMS - Register";
+  }, []);
+
 
   return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">

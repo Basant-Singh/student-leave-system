@@ -1,7 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../components/Navbar";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,6 +29,10 @@ export default function LoginPage() {
       setErr(err.response?.data?.msg || "Login failed");
     }
   };
+
+  useEffect(() => {
+    document.title = "SLMS - Login";
+  }, []);
 
   return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">

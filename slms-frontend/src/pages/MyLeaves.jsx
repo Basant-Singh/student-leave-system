@@ -10,6 +10,7 @@ export default function MyLeaves() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
+    document.title = "SLMS - My Leaves";
     const fetchLeaves = async () => {
       try {
         const res = await axios.get("http://localhost:4000/api/leave/mine", {
