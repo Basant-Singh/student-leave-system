@@ -1,0 +1,16 @@
+# Ignore backend + frontend node modules
+slms-backend/node_modules/
+slms-frontend/node_modules/
+
+# Ignore local env config
+slms-backend/.env
+slms-frontend/.env
+
+# OS / Editor files
+.DS_Store
+*.log
+
+# Test / Dev junk
+*.test.js
+*.spec.js
+coverage/
