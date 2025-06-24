@@ -15,6 +15,7 @@ const leaveSchema = new mongoose.Schema({
     default: "pending",
   },
   appliedAt: { type: Date, default: Date.now },
+  adminComment: { type: String, default: ""},
 });
 
 module.exports = mongoose.model("Leave", leaveSchema);

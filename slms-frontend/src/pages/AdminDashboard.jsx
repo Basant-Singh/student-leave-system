@@ -6,6 +6,8 @@ export default function AdminDashboard() {
   const [leaves, setLeaves] = useState([]);
   const [err, setErr] = useState("");
   const token = localStorage.getItem("token");
+  const [comments, setComments] = useState({});
+
 
   const fetchAllLeaves = async () => {
     try {
@@ -20,20 +22,28 @@ export default function AdminDashboard() {
     }
   };
 
-  const updateStatus = async (id, status) => {
+  const handleCommentChange = (id, value) => {
+    setComments((prev) => ({ ...prev, [id]: value }));
+  };
+
+  const handleAction = async (id, action) => {
+    const token = localStorage.getItem("token");
+    const comment = comments[id] || "";
+
     try {
       await axios.put(
         `http://localhost:4000/api/leave/update/${id}`,
-        { status },
+        { status: action, comment },
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      fetchAllLeaves(); // refresh list
+      fetchAllLeaves(); // refresh the list
     } catch (error) {
-      console.error("Error updating status:", error);
+      console.error("Error updating leave:", error);
     }
   };
+
 
   useEffect(() => {
     document.title = "SLMS - Admin Dashboard";
@@ -63,7 +73,7 @@ export default function AdminDashboard() {
                 <p className="text-sm">By: {leave.studentId?.name} ({leave.studentId?.email})</p>
               </div>
 
-              <div className="mt-3 sm:mt-0 space-x-2">
+              <div className="mt-3 sm:mt-0 space-x-2 flex flex-col items-end">
                 <span
                   className={`px-3 py-1 rounded-full text-sm ${
                     leave.status === "pending"
@@ -75,23 +85,39 @@ export default function AdminDashboard() {
                 >
                   {leave.status.toUpperCase()}
                 </span>
-
-                {leave.status === "pending" && (
-                  <>
-                    <button
-                      onClick={() => updateStatus(leave._id, "approved")}
-                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
-                    >
-                      Approve
-                    </button>
-                    <button
-                      onClick={() => updateStatus(leave._id, "rejected")}
-                      className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
-                    >
-                      Reject
-                    </button>
-                  </>
+                {leave.status !== "pending" && leave.adminComment && (
+                  <p className="text-sm text-gray-600 mt-2">
+                    <strong>Comment:</strong> {leave.adminComment}
+                  </p>
                 )}
+                {leave.status === "pending" && (
+                  <div className="mt-2">
+                    <textarea
+                      placeholder="Admin comment (optional)"
+                      value={comments[leave._id] || ""}
+                      onChange={(e) => handleCommentChange(leave._id, e.target.value)}
+                      className="w-full border p-2 rounded"
+                    />
+
+                    <div className="flex justify-end space-x-2 mt-2">
+                      <button
+                        onClick={() => handleAction(leave._id, "approved")}
+                        className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700"
+                      >
+                        Approve
+                      </button>
+                      <button
+                        onClick={() => handleAction(leave._id, "rejected")}
+                        className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700"
+                      >
+                        Reject
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                
+
               </div>
             </div>
           ))}
