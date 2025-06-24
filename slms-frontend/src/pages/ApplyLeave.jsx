@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbar";
@@ -40,6 +40,10 @@ export default function ApplyLeave() {
       setErr(error.response?.data?.msg || "Error submitting leave");
     }
   };
+
+  useEffect(() => {
+    document.title = "SLMS - Apply Leave";
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-100">

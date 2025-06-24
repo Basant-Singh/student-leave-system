@@ -36,6 +36,7 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
+    document.title = "SLMS - Admin Dashboard";
     fetchAllLeaves();
   }, []);
 

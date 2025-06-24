@@ -9,6 +9,7 @@ export default function Dashboard() {
 
 
   useEffect(() => {
+    document.title = "SLMS - Dashboard";
     if (!user) {
       navigate("/");
     }
