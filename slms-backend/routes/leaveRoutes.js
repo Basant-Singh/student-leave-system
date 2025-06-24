@@ -54,7 +54,7 @@ router.put("/update/:id", authMiddleware, async (req, res) => {
     return res.status(403).json({ msg: "Access denied" });
   }
 
-  const { status } = req.body;
+  const { status, comment } = req.body;
 
   if (!["approved", "rejected"].includes(status)) {
     return res.status(400).json({ msg: "Invalid status" });
@@ -65,6 +65,7 @@ router.put("/update/:id", authMiddleware, async (req, res) => {
     if (!leave) return res.status(404).json({ msg: "Leave not found" });
 
     leave.status = status;
+    leave.adminComment = comment;
     await leave.save();
 
     res.json({ msg: `Leave ${status}`, leave });

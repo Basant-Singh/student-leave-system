@@ -57,17 +57,24 @@ export default function MyLeaves() {
                     {new Date(leave.toDate).toLocaleDateString()}
                   </p>
                 </div>
-                <span
-                  className={`mt-2 sm:mt-0 px-3 py-1 rounded-full text-sm font-semibold ${
-                    leave.status === "pending"
-                      ? "bg-yellow-100 text-yellow-700"
-                      : leave.status === "approved"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-red-100 text-red-700"
-                  }`}
-                >
-                  {leave.status.toUpperCase()}
-                </span>
+                <div className="flex flex-col items-end">
+                  <span
+                    className={`mt-2 sm:mt-0 px-3 py-1 rounded-full text-sm font-semibold ${
+                      leave.status === "pending"
+                        ? "bg-yellow-100 text-yellow-700"
+                        : leave.status === "approved"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-red-100 text-red-700"
+                    }`}
+                  >
+                    {leave.status.toUpperCase()}
+                  </span>
+                  {leave.status !== "pending" && leave.adminComment && (
+                    <p className="text-sm text-gray-600 mt-2">
+                      <strong>Comment:</strong> {leave.adminComment}
+                    </p>
+                  )}
+                </div>
               </li>
             ))}
           </ul>
