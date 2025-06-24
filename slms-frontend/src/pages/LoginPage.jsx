@@ -32,6 +32,16 @@ export default function LoginPage() {
 
   useEffect(() => {
     document.title = "SLMS - Login";
+
+    const rawUser = localStorage.getItem("user");
+    const user = rawUser ? JSON.parse(rawUser) : null;
+    if (user) {
+      if (user.role === "admin") {
+        navigate("/admin");
+      } else {
+        navigate("/dashboard");
+      }
+    }
   }, []);
 
   return (
