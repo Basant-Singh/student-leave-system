@@ -17,8 +17,13 @@ export default function AdminDashboard() {
       setLeaves(res.data.leaves || []);
       console.log(res.data)
     } catch (error) {
-      console.error("Error:", error);
-      setErr("Could not fetch leave requests.");
+      if(error.status === 403){
+        console.error("Error:", error);
+        setErr("Access Denied");
+      }else{
+        console.error("Error:", error);
+        setErr("Could not fetch leave requests.");
+      }
     }
   };
 
