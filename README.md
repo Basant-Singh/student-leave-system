@@ -17,3 +17,8 @@ A full-stack web app to manage student leave applications.
 ## Run Locally
 
 ### Backend
+
+Note- Create a .env file under `slms-backend/` folder and add the following variables
+- PORT=4000
+- MONGO_URI=your_MongoDB_connection_string
+- JWT_SECRET=super_secret_key_here
